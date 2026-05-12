@@ -307,7 +307,13 @@
 
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;flex-wrap:wrap;gap:8px;">
           <p class="text-apple-muted text-sm" id="game-footer-note">Click Play Now to start. Supports keyboard &amp; touch controls.</p>
-          <button id="game-close-btn" onclick="closeGame()" style="display:none;background:#f5f5f7;border:1px solid #d2d2d7;color:#6e6e73;padding:6px 16px;border-radius:20px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit;">✕ Close Game</button>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <button id="game-fullscreen-btn" onclick="toggleFullscreen()" style="display:none;background:#0071e3;border:none;color:#fff;padding:6px 16px;border-radius:20px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit;display:none;align-items:center;gap:5px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="fs-icon"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+              <span id="fs-label">Fullscreen</span>
+            </button>
+            <button id="game-close-btn" onclick="closeGame()" style="display:none;background:#f5f5f7;border:1px solid #d2d2d7;color:#6e6e73;padding:6px 16px;border-radius:20px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit;">✕ Close Game</button>
+          </div>
         </div>
       </div>
     </section>
@@ -681,7 +687,6 @@ function loadGame() {
   // Show loading state
   cover.style.display   = 'none';
   loading.style.display = 'block';
-  if (closeBtn) closeBtn.style.display = 'inline-block';
   if (footerNote) footerNote.textContent = '⏳ Loading… please wait.';
 
   // Start iframe loading
@@ -695,10 +700,10 @@ function loadGame() {
     if (timerEl) timerEl.textContent = elapsed + 's elapsed';
     if (elapsed >= 60) {
       clearInterval(loadTimerInterval);
-      // Auto-switch to iframe after 60s regardless
       loading.style.display = 'none';
       wrapper.style.display = 'block';
-      if (footerNote) footerNote.textContent = '🎮 Game ready! Click inside to play. Press F11 for fullscreen.';
+      showGameControls();
+      if (footerNote) footerNote.textContent = '🎮 Game ready! Tap Fullscreen for the best experience.';
     }
   }, 1000);
 
@@ -707,14 +712,25 @@ function loadGame() {
     clearInterval(loadTimerInterval);
     loading.style.display = 'none';
     wrapper.style.display = 'block';
-    if (footerNote) footerNote.textContent = '🎮 Game ready! Click inside to play. Press F11 for fullscreen.';
+    showGameControls();
+    if (footerNote) footerNote.textContent = '🎮 Game ready! Tap Fullscreen for the best experience.';
   };
 
   loading.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+function showGameControls() {
+  const fsBtn  = document.getElementById('game-fullscreen-btn');
+  const closeBtn = document.getElementById('game-close-btn');
+  if (fsBtn)    { fsBtn.style.display = 'inline-flex'; }
+  if (closeBtn) { closeBtn.style.display = 'inline-block'; }
+}
+
 function closeGame() {
   if (loadTimerInterval) clearInterval(loadTimerInterval);
+  // Exit fullscreen if active
+  if (document.fullscreenElement) document.exitFullscreen();
+
   const cover   = document.getElementById('game-cover');
   const loading = document.getElementById('game-loading');
   const wrapper = document.getElementById('game-wrapper');
@@ -722,15 +738,47 @@ function closeGame() {
   const timerEl = document.getElementById('load-timer');
   const footerNote = document.getElementById('game-footer-note');
   const closeBtn   = document.getElementById('game-close-btn');
+  const fsBtn      = document.getElementById('game-fullscreen-btn');
 
   frame.src = '';
   cover.style.display   = 'block';
   loading.style.display = 'none';
   wrapper.style.display = 'none';
-  if (timerEl) timerEl.textContent = '0s elapsed';
+  if (timerEl)    timerEl.textContent = '0s elapsed';
   if (footerNote) footerNote.textContent = 'Click Play Now to start. Supports keyboard & touch controls.';
-  if (closeBtn) closeBtn.style.display = 'none';
+  if (closeBtn)   closeBtn.style.display = 'none';
+  if (fsBtn)      fsBtn.style.display = 'none';
 }
+
+function toggleFullscreen() {
+  const wrapper = document.getElementById('game-wrapper');
+  const label   = document.getElementById('fs-label');
+  const icon    = document.getElementById('fs-icon');
+
+  const exitPaths = '<path d="M8 3v3a2 2 0 0 1-2 2H3"/><path d="M21 8h-3a2 2 0 0 1-2-2V3"/><path d="M3 16h3a2 2 0 0 1 2 2v3"/><path d="M16 21v-3a2 2 0 0 1 2-2h3"/>';
+  const enterPaths = '<path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/>';
+
+  if (!document.fullscreenElement) {
+    // Enter fullscreen on the wrapper div
+    (wrapper.requestFullscreen || wrapper.webkitRequestFullscreen || wrapper.mozRequestFullScreen).call(wrapper);
+  } else {
+    (document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen).call(document);
+  }
+}
+
+// Update button label when fullscreen state changes
+document.addEventListener('fullscreenchange', function() {
+  const label = document.getElementById('fs-label');
+  const icon  = document.getElementById('fs-icon');
+  if (!label || !icon) return;
+  if (document.fullscreenElement) {
+    label.textContent = 'Exit Fullscreen';
+    icon.innerHTML = '<path d="M8 3v3a2 2 0 0 1-2 2H3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 8h-3a2 2 0 0 1-2-2V3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 16h3a2 2 0 0 1 2 2v3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 21v-3a2 2 0 0 1 2-2h3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+  } else {
+    label.textContent = 'Fullscreen';
+    icon.innerHTML = '<path d="M8 3H5a2 2 0 0 0-2 2v3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 8V5a2 2 0 0 0-2-2h-3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 16v3a2 2 0 0 0 2 2h3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 21h3a2 2 0 0 0 2-2v-3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+  }
+});
 
 // Keyboard support for cover
 document.addEventListener('DOMContentLoaded', function() {
