@@ -22,11 +22,13 @@
   <meta property="og:url" content="https://cobbcanmove.club/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Cobb Can Move" />
+  <meta property="og:image" content="https://cobbcanmove.club/cover.gif" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Cobb Can Move – Free Online Puzzle Platformer" />
   <meta name="twitter:description" content="Play Cobb Can Move free in your browser. No download required." />
+  <meta name="twitter:image" content="https://cobbcanmove.club/cover.gif" />
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -84,6 +86,85 @@
 
     /* Table striping */
     tbody tr:nth-child(even) { background-color: #f5f5f7; }
+
+    /* Game cover click-to-play */
+    .game-cover-wrap {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 25px 50px rgba(0,0,0,.25);
+    }
+    .game-cover-wrap img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .3s;
+    }
+    .game-cover-wrap:hover img { transform: scale(1.03); }
+    .game-cover-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,.35);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+    .game-play-btn {
+      background: #0071e3;
+      color: #fff;
+      border: none;
+      padding: 14px 40px;
+      border-radius: 40px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 24px rgba(0,113,227,.5);
+      transition: background .2s, transform .2s;
+      font-family: inherit;
+    }
+    .game-play-btn:hover { background: #0077ed; transform: scale(1.04); }
+    .game-cover-label {
+      color: rgba(255,255,255,.85);
+      font-size: .85rem;
+    }
+
+    /* Loading state */
+    .game-loading-wrap {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #111;
+      box-shadow: 0 25px 50px rgba(0,0,0,.25);
+    }
+    .game-loading-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      text-align: center;
+      padding: 20px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner {
+      width: 46px;
+      height: 46px;
+      border: 4px solid rgba(255,255,255,.15);
+      border-top-color: #0071e3;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
   </style>
 
   <!-- Schema.org structured data -->
@@ -111,7 +192,13 @@
   <!-- ===== HEADER / NAV ===== -->
   <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-apple-border">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14">
-      <a href="/" class="text-lg font-semibold text-apple-text tracking-tight">Cobb Can Move</a>
+      <a href="/" class="flex items-center gap-2.5">
+        <img src="./cover.gif"
+             alt="Cobb Can Move"
+             style="height:36px;width:56px;object-fit:cover;border-radius:7px;"
+             loading="eager">
+        <span class="text-lg font-semibold text-apple-text tracking-tight">Cobb Can Move</span>
+      </a>
       <nav class="hidden sm:flex items-center gap-6 text-sm text-apple-muted">
         <a href="#play" class="hover:text-apple-blue transition-colors">Play</a>
         <a href="#about" class="hover:text-apple-blue transition-colors">About</a>
@@ -125,35 +212,56 @@
     </div>
   </header>
 
+  <!-- Mobile tip (non-blocking) -->
+  <div id="mobile-tip" style="display:none;background:#0071e3;color:#fff;text-align:center;padding:9px 16px;font-size:.85rem;font-weight:600;">
+    📱 Mobile supported! Tap the game to use touch controls. Desktop recommended for best experience.
+  </div>
+
   <main>
 
     <!-- ===== HERO ===== -->
-    <section class="bg-white pt-14 pb-10 border-b border-apple-border">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
-        <div class="inline-flex items-center gap-2 bg-apple-bg text-apple-blue text-xs font-medium px-3 py-1 rounded-full mb-5">
-          <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
-          Free to Play — No Download
-        </div>
+    <section class="bg-white pt-10 pb-10 border-b border-apple-border">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="flex flex-col sm:flex-row items-center gap-10">
 
-        <h1 class="text-4xl sm:text-5xl font-bold text-apple-text leading-tight tracking-tight mb-4">
-          Cobb Can Move
-        </h1>
+          <!-- Left: text -->
+          <div class="flex-1 text-center sm:text-left">
+            <div class="inline-flex items-center gap-2 bg-apple-bg text-apple-blue text-xs font-medium px-3 py-1 rounded-full mb-5">
+              <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+              Free to Play — No Download
+            </div>
 
-        <p class="text-lg sm:text-xl text-apple-muted max-w-xl mx-auto mb-8">
-          Guide Cobb through cleverly crafted puzzle levels — where movement itself is the challenge.
-        </p>
+            <h1 class="text-4xl sm:text-5xl font-bold text-apple-text leading-tight tracking-tight mb-4">
+              Cobb Can Move
+            </h1>
 
-        <a href="#play"
-           class="inline-flex items-center gap-2 bg-apple-blue hover:bg-apple-bluehover text-white text-base font-semibold px-8 py-3 rounded-full shadow-md transition-colors">
-          ▶ Play Now
-        </a>
+            <p class="text-lg text-apple-muted mb-8 max-w-md">
+              Guide Cobb through cleverly crafted puzzle levels — where movement itself is the challenge.
+            </p>
 
-        <div class="flex items-center justify-center gap-6 mt-8 text-sm text-apple-muted">
-          <span>⭐ 5 / 5</span>
-          <span class="w-px h-4 bg-apple-border"></span>
-          <span>🎮 Puzzle Platformer</span>
-          <span class="w-px h-4 bg-apple-border"></span>
-          <span>🌐 Browser Game</span>
+            <a href="#play"
+               class="inline-flex items-center gap-2 bg-apple-blue hover:bg-apple-bluehover text-white text-base font-semibold px-8 py-3 rounded-full shadow-md transition-colors">
+              ▶ Play Now
+            </a>
+
+            <div class="flex items-center justify-center sm:justify-start gap-6 mt-8 text-sm text-apple-muted">
+              <span>⭐ 5 / 5</span>
+              <span class="w-px h-4 bg-apple-border"></span>
+              <span>🎮 Puzzle Platformer</span>
+              <span class="w-px h-4 bg-apple-border"></span>
+              <span>🌐 Browser Game</span>
+            </div>
+          </div>
+
+          <!-- Right: cover image -->
+          <div class="flex-shrink-0 w-full sm:w-80">
+            <img src="./cover.gif"
+                 alt="Cobb Can Move game screenshot"
+                 class="w-full rounded-2xl shadow-2xl"
+                 loading="eager" fetchpriority="high"
+                 style="aspect-ratio:4/3;object-fit:cover;">
+          </div>
+
         </div>
       </div>
     </section>
@@ -162,18 +270,45 @@
     <section id="play" class="py-12 bg-apple-bg">
       <div class="max-w-4xl mx-auto px-4 sm:px-6">
         <h2 class="text-2xl font-bold text-apple-text text-center mb-6">Play Cobb Can Move Online</h2>
-        <div class="game-wrapper shadow-2xl">
+
+        <!-- Cover (default state) -->
+        <div class="game-cover-wrap" id="game-cover" onclick="loadGame()" role="button" tabindex="0" aria-label="Click to play Cobb Can Move">
+          <img src="./cover.gif"
+               alt="Cobb Can Move – Click to Play"
+               loading="eager" fetchpriority="high">
+          <div class="game-cover-overlay">
+            <button class="game-play-btn" onclick="loadGame();event.stopPropagation()">▶ Play Now</button>
+            <span class="game-cover-label">Free · No Download · Browser Game</span>
+          </div>
+        </div>
+
+        <!-- Loading state -->
+        <div class="game-loading-wrap" id="game-loading" style="display:none;">
+          <div class="game-loading-inner">
+            <div class="spinner"></div>
+            <div style="color:#fff;font-weight:700;font-size:1rem;">Loading Game…</div>
+            <div style="color:rgba(255,255,255,.65);font-size:.84rem;line-height:1.6;max-width:320px;">
+              Game is loading in your browser.<br>This usually takes <strong style="color:#fff;">5–30 seconds</strong>.
+            </div>
+            <div id="load-timer" style="color:rgba(255,255,255,.4);font-size:.78rem;margin-top:4px;">0s elapsed</div>
+          </div>
+        </div>
+
+        <!-- iframe (shown after loading) -->
+        <div class="game-wrapper shadow-2xl" id="game-wrapper" style="display:none;">
           <iframe
-            src="https://s.cobb-can-move.com/games/cobb-can-move/index.html"
+            id="game-frame"
+            src=""
             title="Cobb Can Move – Free Online Puzzle Platformer"
             allowfullscreen
-            loading="lazy"
             sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms"
           ></iframe>
         </div>
-        <p class="text-center text-apple-muted text-sm mt-4">
-          Click inside the game frame to start. Works on desktop and mobile.
-        </p>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;flex-wrap:wrap;gap:8px;">
+          <p class="text-apple-muted text-sm" id="game-footer-note">Click Play Now to start. Supports keyboard &amp; touch controls.</p>
+          <button id="game-close-btn" onclick="closeGame()" style="display:none;background:#f5f5f7;border:1px solid #d2d2d7;color:#6e6e73;padding:6px 16px;border-radius:20px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit;">✕ Close Game</button>
+        </div>
       </div>
     </section>
 
@@ -527,5 +662,91 @@
     </div>
   </footer>
 
+<script>
+const GAME_URL = 'https://s.cobb-can-move.com/games/cobb-can-move/index.html';
+var loadTimerInterval = null;
+var loadStartTime = null;
+
+function loadGame() {
+  const cover   = document.getElementById('game-cover');
+  const loading = document.getElementById('game-loading');
+  const wrapper = document.getElementById('game-wrapper');
+  const frame   = document.getElementById('game-frame');
+  const timerEl = document.getElementById('load-timer');
+  const footerNote = document.getElementById('game-footer-note');
+  const closeBtn   = document.getElementById('game-close-btn');
+
+  if (frame.src && frame.src !== window.location.href) return; // already loaded
+
+  // Show loading state
+  cover.style.display   = 'none';
+  loading.style.display = 'block';
+  if (closeBtn) closeBtn.style.display = 'inline-block';
+  if (footerNote) footerNote.textContent = '⏳ Loading… please wait.';
+
+  // Start iframe loading
+  frame.src = GAME_URL;
+
+  // Elapsed timer
+  loadStartTime = Date.now();
+  if (loadTimerInterval) clearInterval(loadTimerInterval);
+  loadTimerInterval = setInterval(function() {
+    var elapsed = Math.floor((Date.now() - loadStartTime) / 1000);
+    if (timerEl) timerEl.textContent = elapsed + 's elapsed';
+    if (elapsed >= 60) {
+      clearInterval(loadTimerInterval);
+      // Auto-switch to iframe after 60s regardless
+      loading.style.display = 'none';
+      wrapper.style.display = 'block';
+      if (footerNote) footerNote.textContent = '🎮 Game ready! Click inside to play. Press F11 for fullscreen.';
+    }
+  }, 1000);
+
+  // Show game when iframe loads
+  frame.onload = function() {
+    clearInterval(loadTimerInterval);
+    loading.style.display = 'none';
+    wrapper.style.display = 'block';
+    if (footerNote) footerNote.textContent = '🎮 Game ready! Click inside to play. Press F11 for fullscreen.';
+  };
+
+  loading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function closeGame() {
+  if (loadTimerInterval) clearInterval(loadTimerInterval);
+  const cover   = document.getElementById('game-cover');
+  const loading = document.getElementById('game-loading');
+  const wrapper = document.getElementById('game-wrapper');
+  const frame   = document.getElementById('game-frame');
+  const timerEl = document.getElementById('load-timer');
+  const footerNote = document.getElementById('game-footer-note');
+  const closeBtn   = document.getElementById('game-close-btn');
+
+  frame.src = '';
+  cover.style.display   = 'block';
+  loading.style.display = 'none';
+  wrapper.style.display = 'none';
+  if (timerEl) timerEl.textContent = '0s elapsed';
+  if (footerNote) footerNote.textContent = 'Click Play Now to start. Supports keyboard & touch controls.';
+  if (closeBtn) closeBtn.style.display = 'none';
+}
+
+// Keyboard support for cover
+document.addEventListener('DOMContentLoaded', function() {
+  var cover = document.getElementById('game-cover');
+  if (cover) {
+    cover.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); loadGame(); }
+    });
+  }
+
+  // Mobile tip (non-blocking)
+  if (/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)) {
+    var tip = document.getElementById('mobile-tip');
+    if (tip) tip.style.display = 'block';
+  }
+});
+</script>
 </body>
 </html>
