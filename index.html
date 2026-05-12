@@ -22,13 +22,13 @@
   <meta property="og:url" content="https://cobbcanmove.club/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Cobb Can Move" />
-  <meta property="og:image" content="https://cobbcanmove.club/cover.gif" />
+  <meta property="og:image" content="https://cobbcanmove.club/cover-thumb.jpg" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Cobb Can Move – Free Online Puzzle Platformer" />
   <meta name="twitter:description" content="Play Cobb Can Move free in your browser. No download required." />
-  <meta name="twitter:image" content="https://cobbcanmove.club/cover.gif" />
+  <meta name="twitter:image" content="https://cobbcanmove.club/cover-thumb.jpg" />
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -48,7 +48,7 @@
             }
           },
           fontFamily: {
-            sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"Segoe UI"', 'Roboto', 'sans-serif'],
+            sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"Helvetica Neue"', '"Segoe UI"', 'Arial', 'sans-serif'],
           }
         }
       }
@@ -193,10 +193,10 @@
   <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-apple-border">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14">
       <a href="/" class="flex items-center gap-2.5">
-        <img src="./cover.gif"
+        <img src="./cover-thumb.jpg"
              alt="Cobb Can Move"
              style="height:36px;width:56px;object-fit:cover;border-radius:7px;"
-             loading="eager">
+             loading="eager" fetchpriority="high">
         <span class="text-lg font-semibold text-apple-text tracking-tight">Cobb Can Move</span>
       </a>
       <nav class="hidden sm:flex items-center gap-6 text-sm text-apple-muted">
@@ -255,11 +255,12 @@
 
           <!-- Right: cover image -->
           <div class="flex-shrink-0 w-full sm:w-80">
-            <img src="./cover.gif"
+            <img src="./cover-thumb.jpg"
                  alt="Cobb Can Move game screenshot"
                  class="w-full rounded-2xl shadow-2xl"
                  loading="eager" fetchpriority="high"
-                 style="aspect-ratio:4/3;object-fit:cover;">
+                 width="800" height="428"
+                 style="aspect-ratio:16/9;object-fit:cover;">
           </div>
 
         </div>
@@ -275,7 +276,7 @@
         <div class="game-cover-wrap" id="game-cover" onclick="loadGame()" role="button" tabindex="0" aria-label="Click to play Cobb Can Move">
           <img src="./cover.gif"
                alt="Cobb Can Move – Click to Play"
-               loading="eager" fetchpriority="high">
+               loading="lazy" width="714" height="428">
           <div class="game-cover-overlay">
             <button class="game-play-btn" onclick="loadGame();event.stopPropagation()">▶ Play Now</button>
             <span class="game-cover-label">Free · No Download · Browser Game</span>
@@ -294,27 +295,38 @@
           </div>
         </div>
 
-        <!-- iframe (shown after loading) -->
-        <div class="game-wrapper shadow-2xl" id="game-wrapper" style="display:none;">
-          <iframe
-            id="game-frame"
-            src=""
-            title="Cobb Can Move – Free Online Puzzle Platformer"
-            allowfullscreen
-            sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms"
-          ></iframe>
-        </div>
-
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;flex-wrap:wrap;gap:8px;">
-          <p class="text-apple-muted text-sm" id="game-footer-note">Click Play Now to start. Supports keyboard &amp; touch controls.</p>
-          <div style="display:flex;gap:8px;align-items:center;">
-            <button id="game-fullscreen-btn" onclick="toggleFullscreen()" style="display:none;background:#0071e3;border:none;color:#fff;padding:6px 16px;border-radius:20px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit;display:none;align-items:center;gap:5px;">
+        <!-- iframe + overlay controls -->
+        <div id="game-wrapper" style="display:none;position:relative;border-radius:12px;overflow:hidden;box-shadow:0 25px 50px rgba(0,0,0,.25);">
+          <div style="position:relative;width:100%;padding-top:56.25%;background:#000;">
+            <iframe
+              id="game-frame"
+              src=""
+              title="Cobb Can Move – Free Online Puzzle Platformer"
+              allowfullscreen
+              webkit-playsinline
+              sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms"
+              style="position:absolute;inset:0;width:100%;height:100%;border:none;"
+            ></iframe>
+          </div>
+          <!-- Overlay buttons — always on top of iframe -->
+          <div id="game-controls" style="display:none;position:absolute;bottom:10px;right:10px;z-index:9999;display:none;gap:8px;align-items:center;">
+            <button id="game-fullscreen-btn"
+              ontouchstart="toggleFullscreen();event.stopPropagation();"
+              onclick="toggleFullscreen();event.stopPropagation();"
+              style="background:rgba(0,0,0,.65);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25);color:#fff;padding:8px 14px;border-radius:20px;font-size:.8rem;font-weight:600;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:5px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="fs-icon"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
               <span id="fs-label">Fullscreen</span>
             </button>
-            <button id="game-close-btn" onclick="closeGame()" style="display:none;background:#f5f5f7;border:1px solid #d2d2d7;color:#6e6e73;padding:6px 16px;border-radius:20px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit;">✕ Close Game</button>
+            <button id="game-close-btn"
+              ontouchstart="closeGame();event.stopPropagation();"
+              onclick="closeGame();event.stopPropagation();"
+              style="background:rgba(0,0,0,.65);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25);color:#fff;padding:8px 14px;border-radius:20px;font-size:.8rem;font-weight:600;cursor:pointer;font-family:inherit;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">
+              ✕ Close
+            </button>
           </div>
         </div>
+
+        <p class="text-apple-muted text-sm mt-3" id="game-footer-note">Click Play Now to start. Supports keyboard &amp; touch controls.</p>
       </div>
     </section>
 
@@ -719,65 +731,91 @@ function loadGame() {
   loading.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+var isIosFakeFS = false;
+
 function showGameControls() {
-  const fsBtn  = document.getElementById('game-fullscreen-btn');
-  const closeBtn = document.getElementById('game-close-btn');
-  if (fsBtn)    { fsBtn.style.display = 'inline-flex'; }
-  if (closeBtn) { closeBtn.style.display = 'inline-block'; }
+  var controls = document.getElementById('game-controls');
+  if (controls) controls.style.display = 'flex';
 }
 
 function closeGame() {
   if (loadTimerInterval) clearInterval(loadTimerInterval);
-  // Exit fullscreen if active
-  if (document.fullscreenElement) document.exitFullscreen();
+  // Exit fullscreen (standard or iOS fake)
+  exitFullscreenAll();
 
-  const cover   = document.getElementById('game-cover');
-  const loading = document.getElementById('game-loading');
-  const wrapper = document.getElementById('game-wrapper');
-  const frame   = document.getElementById('game-frame');
-  const timerEl = document.getElementById('load-timer');
-  const footerNote = document.getElementById('game-footer-note');
-  const closeBtn   = document.getElementById('game-close-btn');
-  const fsBtn      = document.getElementById('game-fullscreen-btn');
+  var cover    = document.getElementById('game-cover');
+  var loading  = document.getElementById('game-loading');
+  var wrapper  = document.getElementById('game-wrapper');
+  var frame    = document.getElementById('game-frame');
+  var timerEl  = document.getElementById('load-timer');
+  var footerNote = document.getElementById('game-footer-note');
+  var controls = document.getElementById('game-controls');
 
   frame.src = '';
   cover.style.display   = 'block';
   loading.style.display = 'none';
   wrapper.style.display = 'none';
+  if (controls)   controls.style.display = 'none';
   if (timerEl)    timerEl.textContent = '0s elapsed';
   if (footerNote) footerNote.textContent = 'Click Play Now to start. Supports keyboard & touch controls.';
-  if (closeBtn)   closeBtn.style.display = 'none';
-  if (fsBtn)      fsBtn.style.display = 'none';
+}
+
+function exitFullscreenAll() {
+  if (isIosFakeFS) {
+    // Restore iOS fake fullscreen
+    var wrapper = document.getElementById('game-wrapper');
+    wrapper.style.cssText = wrapper.style.cssText.replace('position:fixed;inset:0;z-index:99999;border-radius:0;', '');
+    document.body.style.overflow = '';
+    isIosFakeFS = false;
+    updateFsButton(false);
+  } else if (document.fullscreenElement || document.webkitFullscreenElement) {
+    var exitFn = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen;
+    if (exitFn) exitFn.call(document);
+  }
 }
 
 function toggleFullscreen() {
-  const wrapper = document.getElementById('game-wrapper');
-  const label   = document.getElementById('fs-label');
-  const icon    = document.getElementById('fs-icon');
+  var wrapper = document.getElementById('game-wrapper');
+  var isFS = !!(document.fullscreenElement || document.webkitFullscreenElement || isIosFakeFS);
 
-  const exitPaths = '<path d="M8 3v3a2 2 0 0 1-2 2H3"/><path d="M21 8h-3a2 2 0 0 1-2-2V3"/><path d="M3 16h3a2 2 0 0 1 2 2v3"/><path d="M16 21v-3a2 2 0 0 1 2-2h3"/>';
-  const enterPaths = '<path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/>';
+  if (isFS) {
+    exitFullscreenAll();
+    return;
+  }
 
-  if (!document.fullscreenElement) {
-    // Enter fullscreen on the wrapper div
-    (wrapper.requestFullscreen || wrapper.webkitRequestFullscreen || wrapper.mozRequestFullScreen).call(wrapper);
+  // Try standard Fullscreen API
+  var reqFn = wrapper.requestFullscreen || wrapper.webkitRequestFullscreen || wrapper.mozRequestFullScreen;
+  if (reqFn) {
+    reqFn.call(wrapper);
   } else {
-    (document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen).call(document);
+    // iOS Safari fallback: position:fixed over whole screen
+    wrapper.style.cssText += 'position:fixed;inset:0;z-index:99999;border-radius:0;';
+    document.body.style.overflow = 'hidden';
+    isIosFakeFS = true;
+    updateFsButton(true);
+    wrapper.scrollIntoView();
   }
 }
 
-// Update button label when fullscreen state changes
-document.addEventListener('fullscreenchange', function() {
-  const label = document.getElementById('fs-label');
-  const icon  = document.getElementById('fs-icon');
-  if (!label || !icon) return;
-  if (document.fullscreenElement) {
-    label.textContent = 'Exit Fullscreen';
-    icon.innerHTML = '<path d="M8 3v3a2 2 0 0 1-2 2H3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 8h-3a2 2 0 0 1-2-2V3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 16h3a2 2 0 0 1 2 2v3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 21v-3a2 2 0 0 1 2-2h3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+function updateFsButton(entering) {
+  var label = document.getElementById('fs-label');
+  var icon  = document.getElementById('fs-icon');
+  if (!label) return;
+  if (entering) {
+    label.textContent = 'Exit Full';
+    if (icon) icon.innerHTML = '<path d="M8 3v3a2 2 0 0 1-2 2H3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 8h-3a2 2 0 0 1-2-2V3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 16h3a2 2 0 0 1 2 2v3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 21v-3a2 2 0 0 1 2-2h3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
   } else {
     label.textContent = 'Fullscreen';
-    icon.innerHTML = '<path d="M8 3H5a2 2 0 0 0-2 2v3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 8V5a2 2 0 0 0-2-2h-3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 16v3a2 2 0 0 0 2 2h3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 21h3a2 2 0 0 0 2-2v-3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+    if (icon) icon.innerHTML = '<path d="M8 3H5a2 2 0 0 0-2 2v3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 8V5a2 2 0 0 0-2-2h-3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 16v3a2 2 0 0 0 2 2h3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 21h3a2 2 0 0 0 2-2v-3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
   }
+}
+
+// Standard fullscreen change events
+['fullscreenchange','webkitfullscreenchange'].forEach(function(evt) {
+  document.addEventListener(evt, function() {
+    var inFS = !!(document.fullscreenElement || document.webkitFullscreenElement);
+    updateFsButton(inFS);
+  });
 });
 
 // Keyboard support for cover
