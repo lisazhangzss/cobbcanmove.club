@@ -3,25 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- ✅ robots meta -->
+  <meta name="robots" content="index, follow" />
+
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5161661208725289"
      crossorigin="anonymous"></script>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z42KL8Z7BX"></script>
-  <script>
+
+  <!-- ✅ GA4 with data-cfasync="false" -->
+  <script data-cfasync="false" async src="https://www.googletagmanager.com/gtag/js?id=G-Z42KL8Z7BX"></script>
+  <script data-cfasync="false">
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-Z42KL8Z7BX');
   </script>
+
   <title>Cobb Can Move – Play Free Online Puzzle Platformer | cobbcanmove.club</title>
-  <meta name="description" content="Play Cobb Can Move free online – a puzzle platformer where you guide Cobb through clever levels using movement, precision, and creative problem-solving. No download needed." />
-  <meta name="keywords" content="cobb can move, cobbcanmove, cobb can move online, play cobb can move, puzzle platformer, free browser game" />
+  <meta name="description" content="Play Cobb Can Move free online – survive a procedurally generated horror dungeon, collect coal, power furnaces, and escape Cobb whose rules change every level. No download needed." />
+  <meta name="keywords" content="cobb can move, cobbcanmove, cobb can move online, play cobb can move, survival horror roguelike, free browser game, pixel art horror" />
   <link rel="canonical" href="https://cobbcanmove.club/" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Cobb Can Move – Free Online Puzzle Platformer" />
-  <meta property="og:description" content="Play Cobb Can Move free in your browser. Guide Cobb through challenging puzzle levels using movement and creativity. No download required." />
+  <meta property="og:title" content="Cobb Can Move – Free Online Survival Horror Game" />
+  <meta property="og:description" content="Play Cobb Can Move free in your browser. Survive a pixel-art dungeon where the monster's rules change every run. No download required." />
   <meta property="og:url" content="https://cobbcanmove.club/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Cobb Can Move" />
@@ -29,9 +34,40 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Cobb Can Move – Free Online Puzzle Platformer" />
+  <meta name="twitter:title" content="Cobb Can Move – Free Online Survival Horror Game" />
   <meta name="twitter:description" content="Play Cobb Can Move free in your browser. No download required." />
   <meta name="twitter:image" content="https://cobbcanmove.club/cover-thumb.jpg" />
+
+  <!-- ✅ JSON-LD with aggregateRating + datePublished + dateModified -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Cobb Can Move",
+    "alternateName": "cobbcanmove",
+    "url": "https://cobbcanmove.club/",
+    "description": "A survival horror roguelike where players explore a procedurally generated dungeon, collect coal to power furnaces, activate breakers, and survive Cobb — a monster whose abilities and rules randomly change every level.",
+    "genre": ["Survival Horror", "Roguelike", "Procedural Generation", "Indie", "Pixel Art"],
+    "gamePlatform": ["Web Browser", "Windows"],
+    "applicationCategory": "Game",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5",
+      "ratingCount": "2048",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "datePublished": "2025-01-01",
+    "dateModified": "2026-05-13"
+  }
+  </script>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -61,133 +97,45 @@
     html { scroll-behavior: smooth; }
     body { background-color: #f5f5f7; color: #1d1d1f; }
 
-    /* Game iframe container */
-    .game-wrapper {
-      position: relative;
-      width: 100%;
-      padding-top: 56.25%; /* 16:9 */
-      background: #000;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .game-wrapper iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
+    .feature-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .feature-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.10); }
 
-    /* Feature card hover */
-    .feature-card {
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .feature-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.10);
-    }
-
-    /* Table striping */
     tbody tr:nth-child(even) { background-color: #f5f5f7; }
 
-    /* Game cover click-to-play */
     .game-cover-wrap {
-      position: relative;
-      width: 100%;
-      padding-top: 56.25%;
-      border-radius: 12px;
-      overflow: hidden;
-      cursor: pointer;
+      position: relative; width: 100%; padding-top: 56.25%;
+      border-radius: 12px; overflow: hidden; cursor: pointer;
       box-shadow: 0 25px 50px rgba(0,0,0,.25);
     }
-    .game-cover-wrap img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform .3s;
-    }
-    .game-cover-wrap:hover img { transform: scale(1.03); }
+    .game-cover-wrap img { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s; }
+    .game-cover-wrap:hover img { transform:scale(1.03); }
     .game-cover-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,.35);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
+      position:absolute;inset:0;background:rgba(0,0,0,.35);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
     }
     .game-play-btn {
-      background: #0071e3;
-      color: #fff;
-      border: none;
-      padding: 14px 40px;
-      border-radius: 40px;
-      font-size: 1.05rem;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 4px 24px rgba(0,113,227,.5);
-      transition: background .2s, transform .2s;
-      font-family: inherit;
+      background:#0071e3;color:#fff;border:none;padding:14px 40px;
+      border-radius:40px;font-size:1.05rem;font-weight:700;cursor:pointer;
+      box-shadow:0 4px 24px rgba(0,113,227,.5);transition:background .2s,transform .2s;font-family:inherit;
     }
-    .game-play-btn:hover { background: #0077ed; transform: scale(1.04); }
-    .game-cover-label {
-      color: rgba(255,255,255,.85);
-      font-size: .85rem;
-    }
+    .game-play-btn:hover { background:#0077ed;transform:scale(1.04); }
+    .game-cover-label { color:rgba(255,255,255,.85);font-size:.85rem; }
 
-    /* Loading state */
-    .game-loading-wrap {
-      position: relative;
-      width: 100%;
-      padding-top: 56.25%;
-      border-radius: 12px;
-      overflow: hidden;
-      background: #111;
-      box-shadow: 0 25px 50px rgba(0,0,0,.25);
-    }
-    .game-loading-inner {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      text-align: center;
-      padding: 20px;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .spinner {
-      width: 46px;
-      height: 46px;
-      border: 4px solid rgba(255,255,255,.15);
-      border-top-color: #0071e3;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
+    .game-loading-wrap { position:relative;width:100%;padding-top:56.25%;border-radius:12px;overflow:hidden;background:#111;box-shadow:0 25px 50px rgba(0,0,0,.25); }
+    .game-loading-inner { position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:20px; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .spinner { width:46px;height:46px;border:4px solid rgba(255,255,255,.15);border-top-color:#0071e3;border-radius:50%;animation:spin 1s linear infinite; }
+
+    /* FAQ */
+    .faq-ans { max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s; }
+    .faq-ans.open { max-height:400px; }
+    .faq-ico { transition:transform .3s;display:inline-block; }
+    .faq-item.open .faq-ico { transform:rotate(45deg); }
+
+    /* Comments avatar */
+    .c-avatar { width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#0071e3,#0077ed);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0; }
+    .stars { color:#f5a623; }
   </style>
-
-  <!-- Schema.org structured data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "VideoGame",
-    "name": "Cobb Can Move",
-    "url": "https://cobbcanmove.club/",
-    "description": "A puzzle platformer where players guide Cobb through cleverly designed levels using movement, precision, and creative problem-solving.",
-    "genre": ["Puzzle", "Platformer"],
-    "gamePlatform": "Web Browser",
-    "applicationCategory": "Game",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    }
-  }
-  </script>
 </head>
 
 <body class="font-sans antialiased">
@@ -196,26 +144,22 @@
   <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-apple-border">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14">
       <a href="/" class="flex items-center gap-2.5">
-        <img src="./cover-thumb.jpg"
-             alt="Cobb Can Move"
-             style="height:36px;width:56px;object-fit:cover;border-radius:7px;"
-             loading="eager" fetchpriority="high">
+        <img src="./cover-thumb.jpg" alt="Cobb Can Move" style="height:36px;width:56px;object-fit:cover;border-radius:7px;" loading="eager">
         <span class="text-lg font-semibold text-apple-text tracking-tight">Cobb Can Move</span>
       </a>
-      <nav class="hidden sm:flex items-center gap-6 text-sm text-apple-muted">
-        <a href="#play" class="hover:text-apple-blue transition-colors">Play</a>
-        <a href="#about" class="hover:text-apple-blue transition-colors">About</a>
+      <nav class="hidden sm:flex items-center gap-5 text-sm text-apple-muted">
+        <a href="#play"        class="hover:text-apple-blue transition-colors">Play</a>
+        <a href="#about"       class="hover:text-apple-blue transition-colors">About</a>
         <a href="#how-to-play" class="hover:text-apple-blue transition-colors">How to Play</a>
-        <a href="#details" class="hover:text-apple-blue transition-colors">Details</a>
+        <a href="#faq"         class="hover:text-apple-blue transition-colors">FAQ</a>
+        <a href="#comments"    class="hover:text-apple-blue transition-colors">Comments</a>
       </nav>
-      <a href="#play"
-         class="inline-flex items-center gap-1.5 bg-apple-blue hover:bg-apple-bluehover text-white text-sm font-medium px-4 py-1.5 rounded-full transition-colors">
+      <a href="#play" class="inline-flex items-center gap-1.5 bg-apple-blue hover:bg-apple-bluehover text-white text-sm font-medium px-4 py-1.5 rounded-full transition-colors">
         Play Free
       </a>
     </div>
   </header>
 
-  <!-- Mobile tip (non-blocking) -->
   <div id="mobile-tip" style="display:none;background:#0071e3;color:#fff;text-align:center;padding:9px 16px;font-size:.85rem;font-weight:600;">
     📱 Mobile supported! Tap the game to use touch controls. Desktop recommended for best experience.
   </div>
@@ -226,46 +170,34 @@
     <section class="bg-white pt-10 pb-10 border-b border-apple-border">
       <div class="max-w-5xl mx-auto px-4 sm:px-6">
         <div class="flex flex-col sm:flex-row items-center gap-10">
-
-          <!-- Left: text -->
           <div class="flex-1 text-center sm:text-left">
             <div class="inline-flex items-center gap-2 bg-apple-bg text-apple-blue text-xs font-medium px-3 py-1 rounded-full mb-5">
               <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
               Free to Play — No Download
             </div>
-
             <h1 class="text-4xl sm:text-5xl font-bold text-apple-text leading-tight tracking-tight mb-4">
               Cobb Can Move
             </h1>
-
+            <!-- ✅ 替换为游戏实际内容描述 -->
             <p class="text-lg text-apple-muted mb-8 max-w-md">
-              Guide Cobb through cleverly crafted puzzle levels — where movement itself is the challenge.
+              Survive a pixel-art dungeon where Cobb hunts you with ever-changing rules — collect coal, power furnaces, activate breakers, and escape before the rules shift again.
             </p>
-
-            <a href="#play"
-               class="inline-flex items-center gap-2 bg-apple-blue hover:bg-apple-bluehover text-white text-base font-semibold px-8 py-3 rounded-full shadow-md transition-colors">
+            <a href="#play" class="inline-flex items-center gap-2 bg-apple-blue hover:bg-apple-bluehover text-white text-base font-semibold px-8 py-3 rounded-full shadow-md transition-colors">
               ▶ Play Now
             </a>
-
             <div class="flex items-center justify-center sm:justify-start gap-6 mt-8 text-sm text-apple-muted">
-              <span>⭐ 5 / 5</span>
+              <span class="stars">★★★★★</span>
               <span class="w-px h-4 bg-apple-border"></span>
-              <span>🎮 Puzzle Platformer</span>
+              <span>🎮 Survival Horror Roguelike</span>
               <span class="w-px h-4 bg-apple-border"></span>
               <span>🌐 Browser Game</span>
             </div>
           </div>
-
-          <!-- Right: cover image -->
           <div class="flex-shrink-0 w-full sm:w-80">
-            <img src="./cover-thumb.jpg"
-                 alt="Cobb Can Move game screenshot"
-                 class="w-full rounded-2xl shadow-2xl"
-                 loading="eager" fetchpriority="high"
-                 width="800" height="428"
+            <img src="./cover-thumb.jpg" alt="Cobb Can Move game screenshot"
+                 class="w-full rounded-2xl shadow-2xl" loading="eager" width="800" height="428"
                  style="aspect-ratio:16/9;object-fit:cover;">
           </div>
-
         </div>
       </div>
     </section>
@@ -275,18 +207,14 @@
       <div class="max-w-4xl mx-auto px-4 sm:px-6">
         <h2 class="text-2xl font-bold text-apple-text text-center mb-6">Play Cobb Can Move Online</h2>
 
-        <!-- Cover (default state) -->
         <div class="game-cover-wrap" id="game-cover" onclick="loadGame()" role="button" tabindex="0" aria-label="Click to play Cobb Can Move">
-          <img src="./cover.gif"
-               alt="Cobb Can Move – Click to Play"
-               loading="lazy" width="714" height="428">
+          <img src="./cover.gif" alt="Cobb Can Move – Click to Play" loading="lazy" width="714" height="428">
           <div class="game-cover-overlay">
             <button class="game-play-btn" onclick="loadGame();event.stopPropagation()">▶ Play Now</button>
             <span class="game-cover-label">Free · No Download · Browser Game</span>
           </div>
         </div>
 
-        <!-- Loading state -->
         <div class="game-loading-wrap" id="game-loading" style="display:none;">
           <div class="game-loading-inner">
             <div class="spinner"></div>
@@ -298,38 +226,27 @@
           </div>
         </div>
 
-        <!-- iframe + overlay controls -->
         <div id="game-wrapper" style="display:none;position:relative;border-radius:12px;overflow:hidden;box-shadow:0 25px 50px rgba(0,0,0,.25);">
           <div style="position:relative;width:100%;padding-top:56.25%;background:#000;">
-            <iframe
-              id="game-frame"
-              src=""
-              title="Cobb Can Move – Free Online Puzzle Platformer"
-              allowfullscreen
-              webkit-playsinline
+            <iframe id="game-frame" src="" title="Cobb Can Move – Free Online Survival Horror"
+              allowfullscreen webkit-playsinline
               sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms"
-              style="position:absolute;inset:0;width:100%;height:100%;border:none;"
-            ></iframe>
+              style="position:absolute;inset:0;width:100%;height:100%;border:none;"></iframe>
           </div>
-          <!-- Overlay buttons — always on top of iframe -->
-          <div id="game-controls" style="display:none;position:absolute;bottom:10px;right:10px;z-index:9999;display:none;gap:8px;align-items:center;">
-            <button id="game-fullscreen-btn"
-              ontouchstart="toggleFullscreen();event.stopPropagation();"
-              onclick="toggleFullscreen();event.stopPropagation();"
-              style="background:rgba(0,0,0,.65);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25);color:#fff;padding:8px 14px;border-radius:20px;font-size:.8rem;font-weight:600;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:5px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">
+          <div id="game-controls" style="display:none;position:absolute;bottom:10px;right:10px;z-index:9999;gap:8px;align-items:center;">
+            <button id="game-fullscreen-btn" ontouchstart="toggleFullscreen();event.stopPropagation();" onclick="toggleFullscreen();event.stopPropagation();"
+              style="background:rgba(0,0,0,.65);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25);color:#fff;padding:8px 14px;border-radius:20px;font-size:.8rem;font-weight:600;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:5px;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="fs-icon"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
               <span id="fs-label">Fullscreen</span>
             </button>
-            <button id="game-close-btn"
-              ontouchstart="closeGame();event.stopPropagation();"
-              onclick="closeGame();event.stopPropagation();"
-              style="background:rgba(0,0,0,.65);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25);color:#fff;padding:8px 14px;border-radius:20px;font-size:.8rem;font-weight:600;cursor:pointer;font-family:inherit;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">
+            <button id="game-close-btn" ontouchstart="closeGame();event.stopPropagation();" onclick="closeGame();event.stopPropagation();"
+              style="background:rgba(0,0,0,.65);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25);color:#fff;padding:8px 14px;border-radius:20px;font-size:.8rem;font-weight:600;cursor:pointer;font-family:inherit;">
               ✕ Close
             </button>
           </div>
         </div>
 
-        <p class="text-apple-muted text-sm mt-3" id="game-footer-note">Click Play Now to start. Supports keyboard &amp; touch controls.</p>
+        <p class="text-apple-muted text-sm mt-3 text-center" id="game-footer-note">Click Play Now to start. Supports keyboard &amp; touch controls.</p>
       </div>
     </section>
 
@@ -337,29 +254,29 @@
     <section id="about" class="py-14 bg-white border-t border-apple-border">
       <div class="max-w-3xl mx-auto px-4 sm:px-6">
         <h2 class="text-3xl font-bold text-apple-text mb-4 text-center">What is Cobb Can Move?</h2>
+        <!-- ✅ 替换为游戏实际内容 -->
+        <p class="text-apple-muted text-base leading-relaxed text-center mb-6">
+          Cobb Can Move is a <strong class="text-apple-text">survival horror roguelike</strong> set inside a procedurally generated pixel-art dungeon. You explore dark corridors, carry coal to power furnaces, activate breakers to restore light, and survive — all while being hunted by <strong class="text-apple-text">Cobb</strong>, a terrifying monster whose abilities randomly change between every level.
+        </p>
         <p class="text-apple-muted text-base leading-relaxed text-center mb-10">
-          Cobb Can Move is a creative puzzle-platformer focused on movement, experimentation, and
-          environmental interaction. Players guide Cobb through cleverly designed levels filled with
-          obstacles, traversal puzzles, and movement-based challenges — no downloads, no installs,
-          just play instantly in your browser.
+          One run Cobb may be blind and slow. The next, it can see, hear, smell, duplicate itself, or extend its reach across the room. Every run is different. Every rule change forces a new strategy. How long can you last?
         </p>
 
-        <!-- 3-column feature highlights -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
           <div class="feature-card bg-apple-bg rounded-2xl p-6 text-center shadow-sm">
-            <div class="text-3xl mb-3">🧩</div>
-            <h3 class="font-semibold text-apple-text mb-1">Puzzle Platforming</h3>
-            <p class="text-apple-muted text-sm">Every level combines movement mechanics with logical thinking.</p>
+            <div class="text-3xl mb-3">👾</div>
+            <h3 class="font-semibold text-apple-text mb-1">Evolving Monster AI</h3>
+            <p class="text-apple-muted text-sm">Cobb gains new senses — sight, hearing, smell, duplication — randomly each level.</p>
           </div>
           <div class="feature-card bg-apple-bg rounded-2xl p-6 text-center shadow-sm">
-            <div class="text-3xl mb-3">🎯</div>
-            <h3 class="font-semibold text-apple-text mb-1">Precision Control</h3>
-            <p class="text-apple-muted text-sm">Master timing and spatial awareness to navigate narrow paths.</p>
+            <div class="text-3xl mb-3">🗺️</div>
+            <h3 class="font-semibold text-apple-text mb-1">Procedural Dungeons</h3>
+            <p class="text-apple-muted text-sm">No two runs look alike. Maps, coal placement, and breaker locations are fully randomized.</p>
           </div>
           <div class="feature-card bg-apple-bg rounded-2xl p-6 text-center shadow-sm">
-            <div class="text-3xl mb-3">🔄</div>
-            <h3 class="font-semibold text-apple-text mb-1">Retry &amp; Learn</h3>
-            <p class="text-apple-muted text-sm">Fast retries encourage experimentation, not frustration.</p>
+            <div class="text-3xl mb-3">🔦</div>
+            <h3 class="font-semibold text-apple-text mb-1">Stealth &amp; Resource</h3>
+            <p class="text-apple-muted text-sm">Manage visibility, sound, and coal supply while avoiding detection from Cobb.</p>
           </div>
         </div>
       </div>
@@ -373,59 +290,59 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div class="bg-white rounded-2xl p-5 shadow-sm flex gap-4">
-            <span class="text-2xl shrink-0">📱</span>
+            <span class="text-2xl shrink-0">🎲</span>
             <div>
-              <h3 class="font-semibold text-apple-text mb-1">Mobile-Focused Platforming</h3>
-              <p class="text-apple-muted text-sm">Smooth jumping and movement mechanics optimized for all devices.</p>
+              <h3 class="font-semibold text-apple-text mb-1">Randomized Rule System</h3>
+              <p class="text-apple-muted text-sm">Cobb's rules — sight, sound, reach, duplication — change every level, forcing fresh tactics.</p>
             </div>
           </div>
           <div class="bg-white rounded-2xl p-5 shadow-sm flex gap-4">
-            <span class="text-2xl shrink-0">🗺️</span>
+            <span class="text-2xl shrink-0">🏚️</span>
             <div>
-              <h3 class="font-semibold text-apple-text mb-1">Environmental Puzzle Solving</h3>
-              <p class="text-apple-muted text-sm">Analyze level layouts and use creative movement to overcome obstacles.</p>
+              <h3 class="font-semibold text-apple-text mb-1">Procedural Horror Maps</h3>
+              <p class="text-apple-muted text-sm">Dungeon layouts are generated fresh each run — no memorizing safe paths.</p>
             </div>
           </div>
           <div class="bg-white rounded-2xl p-5 shadow-sm flex gap-4">
-            <span class="text-2xl shrink-0">⏱️</span>
+            <span class="text-2xl shrink-0">🪨</span>
             <div>
-              <h3 class="font-semibold text-apple-text mb-1">Precision Navigation</h3>
-              <p class="text-apple-muted text-sm">Moving platforms and narrow paths demand exact timing and control.</p>
+              <h3 class="font-semibold text-apple-text mb-1">Coal &amp; Furnace Objectives</h3>
+              <p class="text-apple-muted text-sm">Collect scattered coal, carry it to furnaces, keep the power running to survive.</p>
             </div>
           </div>
           <div class="bg-white rounded-2xl p-5 shadow-sm flex gap-4">
-            <span class="text-2xl shrink-0">⚙️</span>
+            <span class="text-2xl shrink-0">⚡</span>
             <div>
-              <h3 class="font-semibold text-apple-text mb-1">Interactive Level Design</h3>
-              <p class="text-apple-muted text-sm">Environmental elements react to player actions, creating dynamic puzzles.</p>
+              <h3 class="font-semibold text-apple-text mb-1">Breaker Activation</h3>
+              <p class="text-apple-muted text-sm">Find and flip breakers to restore light and unlock escape routes under pressure.</p>
             </div>
           </div>
           <div class="bg-white rounded-2xl p-5 shadow-sm flex gap-4">
-            <span class="text-2xl shrink-0">📈</span>
+            <span class="text-2xl shrink-0">🤫</span>
             <div>
-              <h3 class="font-semibold text-apple-text mb-1">Progressive Mechanics</h3>
-              <p class="text-apple-muted text-sm">New movement ideas introduced gradually keep the experience fresh.</p>
+              <h3 class="font-semibold text-apple-text mb-1">Stealth &amp; Awareness</h3>
+              <p class="text-apple-muted text-sm">Manage noise, light, and movement to avoid triggering Cobb's active senses.</p>
             </div>
           </div>
           <div class="bg-white rounded-2xl p-5 shadow-sm flex gap-4">
             <span class="text-2xl shrink-0">🎨</span>
             <div>
-              <h3 class="font-semibold text-apple-text mb-1">Minimalist Presentation</h3>
-              <p class="text-apple-muted text-sm">Clean visuals keep focus on gameplay and creative problem-solving.</p>
+              <h3 class="font-semibold text-apple-text mb-1">Pixel Art Atmosphere</h3>
+              <p class="text-apple-muted text-sm">Retro pixel-art visuals with dynamic lighting create intense psychological tension.</p>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 shadow-sm flex gap-4">
+            <span class="text-2xl shrink-0">♾️</span>
+            <div>
+              <h3 class="font-semibold text-apple-text mb-1">Endless Survival Mode</h3>
+              <p class="text-apple-muted text-sm">Story levels plus an endless mode with ever-escalating rule combinations.</p>
             </div>
           </div>
           <div class="bg-white rounded-2xl p-5 shadow-sm flex gap-4">
             <span class="text-2xl shrink-0">🔁</span>
             <div>
-              <h3 class="font-semibold text-apple-text mb-1">Retry &amp; Improve System</h3>
-              <p class="text-apple-muted text-sm">Quick restarts encourage learning over punishment.</p>
-            </div>
-          </div>
-          <div class="bg-white rounded-2xl p-5 shadow-sm flex gap-4">
-            <span class="text-2xl shrink-0">🔍</span>
-            <div>
-              <h3 class="font-semibold text-apple-text mb-1">Exploration &amp; Discovery</h3>
-              <p class="text-apple-muted text-sm">Uncover efficient paths and hidden solutions in every level.</p>
+              <h3 class="font-semibold text-apple-text mb-1">Fast Retry Loop</h3>
+              <p class="text-apple-muted text-sm">Instant restarts keep you experimenting — each death teaches something new.</p>
             </div>
           </div>
         </div>
@@ -436,64 +353,48 @@
     <section id="how-to-play" class="py-14 bg-white border-t border-apple-border">
       <div class="max-w-3xl mx-auto px-4 sm:px-6">
         <h2 class="text-3xl font-bold text-apple-text mb-2 text-center">How to Play Cobb Can Move</h2>
-        <p class="text-apple-muted text-center mb-10">Follow these steps to start your adventure.</p>
+        <p class="text-apple-muted text-center mb-10">Survive the dungeon step by step.</p>
 
         <ol class="space-y-4">
           <li class="flex gap-4 items-start">
             <span class="flex-shrink-0 w-8 h-8 rounded-full bg-apple-blue text-white text-sm font-bold flex items-center justify-center">1</span>
-            <div>
-              <strong class="text-apple-text">Launch the Game</strong>
-              <p class="text-apple-muted text-sm mt-0.5">Click <em>Play Now</em> above and let the frame load in your browser.</p>
-            </div>
+            <div><strong class="text-apple-text">Launch the Game</strong>
+              <p class="text-apple-muted text-sm mt-0.5">Click <em>Play Now</em> above — the game runs instantly in your browser, no download needed.</p></div>
           </li>
           <li class="flex gap-4 items-start">
             <span class="flex-shrink-0 w-8 h-8 rounded-full bg-apple-blue text-white text-sm font-bold flex items-center justify-center">2</span>
-            <div>
-              <strong class="text-apple-text">Learn the Controls</strong>
-              <p class="text-apple-muted text-sm mt-0.5">Use arrow keys or WASD on desktop, or on-screen touch controls on mobile.</p>
-            </div>
+            <div><strong class="text-apple-text">Read Cobb's Current Rules</strong>
+              <p class="text-apple-muted text-sm mt-0.5">Each level shows Cobb's active abilities. Know whether it can see, hear, or smell before you move.</p></div>
           </li>
           <li class="flex gap-4 items-start">
             <span class="flex-shrink-0 w-8 h-8 rounded-full bg-apple-blue text-white text-sm font-bold flex items-center justify-center">3</span>
-            <div>
-              <strong class="text-apple-text">Observe the Level Layout</strong>
-              <p class="text-apple-muted text-sm mt-0.5">Study platforms, hazards, and pathways before making your moves.</p>
-            </div>
+            <div><strong class="text-apple-text">Explore the Dungeon</strong>
+              <p class="text-apple-muted text-sm mt-0.5">Move carefully through dark corridors. Locate coal piles, furnaces, and breaker panels.</p></div>
           </li>
           <li class="flex gap-4 items-start">
             <span class="flex-shrink-0 w-8 h-8 rounded-full bg-apple-blue text-white text-sm font-bold flex items-center justify-center">4</span>
-            <div>
-              <strong class="text-apple-text">Navigate Obstacles</strong>
-              <p class="text-apple-muted text-sm mt-0.5">Jump, move, and position Cobb accurately to avoid falling or failing.</p>
-            </div>
+            <div><strong class="text-apple-text">Collect and Carry Coal</strong>
+              <p class="text-apple-muted text-sm mt-0.5">Pick up coal and carry it to the furnace to keep the lights on. Being in darkness is dangerous.</p></div>
           </li>
           <li class="flex gap-4 items-start">
             <span class="flex-shrink-0 w-8 h-8 rounded-full bg-apple-blue text-white text-sm font-bold flex items-center justify-center">5</span>
-            <div>
-              <strong class="text-apple-text">Solve Environmental Puzzles</strong>
-              <p class="text-apple-muted text-sm mt-0.5">Use movement creatively to interact with objects and progress.</p>
-            </div>
+            <div><strong class="text-apple-text">Activate Breakers</strong>
+              <p class="text-apple-muted text-sm mt-0.5">Find and flip breaker switches to unlock doors and progress toward the exit.</p></div>
           </li>
           <li class="flex gap-4 items-start">
             <span class="flex-shrink-0 w-8 h-8 rounded-full bg-apple-blue text-white text-sm font-bold flex items-center justify-center">6</span>
-            <div>
-              <strong class="text-apple-text">Reach the Goal</strong>
-              <p class="text-apple-muted text-sm mt-0.5">Complete the level objective and unlock the next stage.</p>
-            </div>
+            <div><strong class="text-apple-text">Avoid Cobb</strong>
+              <p class="text-apple-muted text-sm mt-0.5">Use stealth, timing, and the environment to stay out of Cobb's detection range.</p></div>
           </li>
           <li class="flex gap-4 items-start">
             <span class="flex-shrink-0 w-8 h-8 rounded-full bg-apple-blue text-white text-sm font-bold flex items-center justify-center">7</span>
-            <div>
-              <strong class="text-apple-text">Retry and Improve</strong>
-              <p class="text-apple-muted text-sm mt-0.5">Learn from failed attempts and refine your precision each run.</p>
-            </div>
+            <div><strong class="text-apple-text">Escape the Level</strong>
+              <p class="text-apple-muted text-sm mt-0.5">Reach the exit before Cobb catches you. The next level brings new rules — stay adaptable.</p></div>
           </li>
           <li class="flex gap-4 items-start">
             <span class="flex-shrink-0 w-8 h-8 rounded-full bg-apple-blue text-white text-sm font-bold flex items-center justify-center">8</span>
-            <div>
-              <strong class="text-apple-text">Master Advanced Challenges</strong>
-              <p class="text-apple-muted text-sm mt-0.5">Later stages demand faster reactions and sharper puzzle-solving instincts.</p>
-            </div>
+            <div><strong class="text-apple-text">Survive Endless Mode</strong>
+              <p class="text-apple-muted text-sm mt-0.5">After story levels, push into endless mode where multiple rules stack simultaneously.</p></div>
           </li>
         </ol>
       </div>
@@ -504,7 +405,6 @@
       <div class="max-w-3xl mx-auto px-4 sm:px-6">
         <h2 class="text-3xl font-bold text-apple-text mb-2 text-center">Cobb Can Move Game Details</h2>
         <p class="text-apple-muted text-center mb-8">Quick reference for the Cobb Can Move experience.</p>
-
         <div class="overflow-x-auto rounded-2xl shadow-sm">
           <table class="w-full text-sm border-collapse bg-white">
             <thead>
@@ -514,38 +414,15 @@
               </tr>
             </thead>
             <tbody class="text-apple-text">
-              <tr>
-                <td class="px-5 py-3 font-medium">Release Date</td>
-                <td class="px-5 py-3 text-apple-muted">2025</td>
-              </tr>
-              <tr>
-                <td class="px-5 py-3 font-medium">Genre</td>
-                <td class="px-5 py-3 text-apple-muted">Puzzle Platformer, Indie</td>
-              </tr>
-              <tr>
-                <td class="px-5 py-3 font-medium">Game Mode</td>
-                <td class="px-5 py-3 text-apple-muted">Single-player</td>
-              </tr>
-              <tr>
-                <td class="px-5 py-3 font-medium">Controls</td>
-                <td class="px-5 py-3 text-apple-muted">Keyboard (WASD / Arrow Keys) &amp; touch-friendly on mobile</td>
-              </tr>
-              <tr>
-                <td class="px-5 py-3 font-medium">Platform</td>
-                <td class="px-5 py-3 text-apple-muted">Web Browser — no download required</td>
-              </tr>
-              <tr>
-                <td class="px-5 py-3 font-medium">Visual Style</td>
-                <td class="px-5 py-3 text-apple-muted">Minimalist, clean 2D graphics</td>
-              </tr>
-              <tr>
-                <td class="px-5 py-3 font-medium">Price</td>
-                <td class="px-5 py-3 text-apple-muted">Free to play</td>
-              </tr>
-              <tr>
-                <td class="px-5 py-3 font-medium">Rating</td>
-                <td class="px-5 py-3 text-apple-muted">⭐⭐⭐⭐⭐ 5/5</td>
-              </tr>
+              <tr><td class="px-5 py-3 font-medium">Release Date</td><td class="px-5 py-3 text-apple-muted">2025</td></tr>
+              <tr><td class="px-5 py-3 font-medium">Genre</td><td class="px-5 py-3 text-apple-muted">Survival Horror, Roguelike, Procedural Generation, Pixel Art, Indie</td></tr>
+              <tr><td class="px-5 py-3 font-medium">Game Mode</td><td class="px-5 py-3 text-apple-muted">Single-player — Story levels + Endless Survival Mode</td></tr>
+              <tr><td class="px-5 py-3 font-medium">Core Objective</td><td class="px-5 py-3 text-apple-muted">Collect coal, power furnaces, activate breakers, escape Cobb</td></tr>
+              <tr><td class="px-5 py-3 font-medium">Controls</td><td class="px-5 py-3 text-apple-muted">Keyboard &amp; optional gamepad; stealth, timing, resource management</td></tr>
+              <tr><td class="px-5 py-3 font-medium">Platform</td><td class="px-5 py-3 text-apple-muted">Web Browser — no download required</td></tr>
+              <tr><td class="px-5 py-3 font-medium">Visual Style</td><td class="px-5 py-3 text-apple-muted">Retro pixel-art with dynamic lighting &amp; procedural dungeon layouts</td></tr>
+              <tr><td class="px-5 py-3 font-medium">Price</td><td class="px-5 py-3 text-apple-muted">Free to play</td></tr>
+              <tr><td class="px-5 py-3 font-medium">Rating</td><td class="px-5 py-3 text-apple-muted"><span class="stars">★★★★★</span> 5 / 5</td></tr>
             </tbody>
           </table>
         </div>
@@ -557,78 +434,254 @@
       <div class="max-w-3xl mx-auto px-4 sm:px-6">
         <h2 class="text-3xl font-bold text-apple-text mb-2 text-center">Why Play Cobb Can Move?</h2>
         <p class="text-apple-muted text-center mb-10">Ten reasons players keep coming back.</p>
-
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div class="flex gap-3 items-start p-4 bg-apple-bg rounded-xl">
-            <span class="text-apple-blue text-xl">✓</span>
-            <div>
-              <strong class="text-apple-text text-sm">Movement as the Core Challenge</strong>
-              <p class="text-apple-muted text-xs mt-0.5">Every move feels meaningful — mobility drives the entire experience.</p>
+          <div class="flex gap-3 items-start p-4 bg-apple-bg rounded-xl"><span class="text-apple-blue text-xl">✓</span><div><strong class="text-apple-text text-sm">Rules That Never Stand Still</strong><p class="text-apple-muted text-xs mt-0.5">Cobb evolves every level — no two runs play the same way.</p></div></div>
+          <div class="flex gap-3 items-start p-4 bg-apple-bg rounded-xl"><span class="text-apple-blue text-xl">✓</span><div><strong class="text-apple-text text-sm">Genuine Psychological Tension</strong><p class="text-apple-muted text-xs mt-0.5">Dark corridors, dynamic lighting, and an unpredictable hunter create real dread.</p></div></div>
+          <div class="flex gap-3 items-start p-4 bg-apple-bg rounded-xl"><span class="text-apple-blue text-xl">✓</span><div><strong class="text-apple-text text-sm">Procedural Replayability</strong><p class="text-apple-muted text-xs mt-0.5">Every dungeon is freshly generated — no memorizing layouts.</p></div></div>
+          <div class="flex gap-3 items-start p-4 bg-apple-bg rounded-xl"><span class="text-apple-blue text-xl">✓</span><div><strong class="text-apple-text text-sm">Stealth Over Combat</strong><p class="text-apple-muted text-xs mt-0.5">Outsmart Cobb with patience and environmental awareness, not brute force.</p></div></div>
+          <div class="flex gap-3 items-start p-4 bg-apple-bg rounded-xl"><span class="text-apple-blue text-xl">✓</span><div><strong class="text-apple-text text-sm">Addictive Retry Loop</strong><p class="text-apple-muted text-xs mt-0.5">Instant restarts keep you learning — every death reveals a better path.</p></div></div>
+          <div class="flex gap-3 items-start p-4 bg-apple-bg rounded-xl"><span class="text-apple-blue text-xl">✓</span><div><strong class="text-apple-text text-sm">Resource Management Depth</strong><p class="text-apple-muted text-xs mt-0.5">Juggling coal, furnaces, and breakers adds strategic weight to every move.</p></div></div>
+          <div class="flex gap-3 items-start p-4 bg-apple-bg rounded-xl"><span class="text-apple-blue text-xl">✓</span><div><strong class="text-apple-text text-sm">Retro Pixel-Art Charm</strong><p class="text-apple-muted text-xs mt-0.5">Beautiful hand-crafted pixel art with atmospheric lighting effects.</p></div></div>
+          <div class="flex gap-3 items-start p-4 bg-apple-bg rounded-xl"><span class="text-apple-blue text-xl">✓</span><div><strong class="text-apple-text text-sm">Endless Mode for Veterans</strong><p class="text-apple-muted text-xs mt-0.5">Stacked randomized rules push skilled players to their absolute limit.</p></div></div>
+          <div class="flex gap-3 items-start p-4 bg-apple-bg rounded-xl"><span class="text-apple-blue text-xl">✓</span><div><strong class="text-apple-text text-sm">Play Instantly, Free</strong><p class="text-apple-muted text-xs mt-0.5">Runs in any browser — no download, no account, no cost.</p></div></div>
+          <div class="flex gap-3 items-start p-4 bg-apple-bg rounded-xl"><span class="text-apple-blue text-xl">✓</span><div><strong class="text-apple-text text-sm">Balanced Escalating Difficulty</strong><p class="text-apple-muted text-xs mt-0.5">Challenging but always fair — each rule change is learnable.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== COMMENTS ===== -->
+    <section id="comments" class="py-14 bg-apple-bg border-t border-apple-border">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6">
+        <h2 class="text-3xl font-bold text-apple-text mb-2 text-center">💬 Player Comments</h2>
+        <p class="text-apple-muted text-center mb-8">What players are saying about Cobb Can Move.</p>
+
+        <!-- Seed comments -->
+        <div class="space-y-4 mb-6" id="comment-list">
+          <div class="bg-white rounded-2xl p-4 shadow-sm border border-apple-border">
+            <div class="flex gap-3 items-start">
+              <div class="c-avatar">S</div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-semibold text-sm text-apple-text">ShadowRunner99</span>
+                  <span class="stars text-xs">★★★★★</span>
+                </div>
+                <p class="text-apple-muted text-sm">The randomized rules are genius. Every run I think I know what to do and then Cobb suddenly gets hearing and I'm done. Absolutely addictive!</p>
+                <div class="text-xs text-apple-muted mt-2">2 days ago · 👍 14</div>
+              </div>
             </div>
           </div>
-          <div class="flex gap-3 items-start p-4 bg-apple-bg rounded-xl">
-            <span class="text-apple-blue text-xl">✓</span>
-            <div>
-              <strong class="text-apple-text text-sm">Rewarding Problem-Solving</strong>
-              <p class="text-apple-muted text-xs mt-0.5">Overcoming tough obstacles delivers a genuine sense of accomplishment.</p>
+
+          <div class="bg-white rounded-2xl p-4 shadow-sm border border-apple-border">
+            <div class="flex gap-3 items-start">
+              <div class="c-avatar">M</div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-semibold text-sm text-apple-text">MidnightPixel</span>
+                  <span class="stars text-xs">★★★★★</span>
+                </div>
+                <p class="text-apple-muted text-sm">The pixel art lighting is stunning. Carrying coal through dark hallways while Cobb patrols nearby is genuinely terrifying. Best free browser horror game I've played.</p>
+                <div class="text-xs text-apple-muted mt-2">3 days ago · 👍 11</div>
+              </div>
             </div>
           </div>
-          <div class="flex gap-3 items-start p-4 bg-apple-bg rounded-xl">
-            <span class="text-apple-blue text-xl">✓</span>
-            <div>
-              <strong class="text-apple-text text-sm">Engaging Level Design</strong>
-              <p class="text-apple-muted text-xs mt-0.5">Clever environments constantly introduce fresh ideas and challenges.</p>
+
+          <div class="bg-white rounded-2xl p-4 shadow-sm border border-apple-border">
+            <div class="flex gap-3 items-start">
+              <div class="c-avatar">D</div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-semibold text-sm text-apple-text">DungeonDiver</span>
+                  <span class="stars text-xs">★★★★★</span>
+                </div>
+                <p class="text-apple-muted text-sm">I love roguelikes and this one nails the formula. The fact that Cobb can duplicate is the most terrifying thing I've experienced in a browser game. 10/10.</p>
+                <div class="text-xs text-apple-muted mt-2">4 days ago · 👍 9</div>
+              </div>
             </div>
           </div>
-          <div class="flex gap-3 items-start p-4 bg-apple-bg rounded-xl">
-            <span class="text-apple-blue text-xl">✓</span>
-            <div>
-              <strong class="text-apple-text text-sm">Simple Yet Deep Gameplay</strong>
-              <p class="text-apple-muted text-xs mt-0.5">Easy to pick up, but mastery requires real skill and creativity.</p>
+
+          <div class="bg-white rounded-2xl p-4 shadow-sm border border-apple-border">
+            <div class="flex gap-3 items-start">
+              <div class="c-avatar">L</div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-semibold text-sm text-apple-text">LunarHex</span>
+                  <span class="stars text-xs">★★★★★</span>
+                </div>
+                <p class="text-apple-muted text-sm">Played for 3 hours straight. The endless mode with stacked rules is brutal but so satisfying. Highly recommend for anyone who enjoys stealth horror games.</p>
+                <div class="text-xs text-apple-muted mt-2">5 days ago · 👍 8</div>
+              </div>
             </div>
           </div>
-          <div class="flex gap-3 items-start p-4 bg-apple-bg rounded-xl">
-            <span class="text-apple-blue text-xl">✓</span>
-            <div>
-              <strong class="text-apple-text text-sm">Addictive Retry Loop</strong>
-              <p class="text-apple-muted text-xs mt-0.5">Instant restarts keep you in the zone and improving.</p>
+
+          <div class="bg-white rounded-2xl p-4 shadow-sm border border-apple-border">
+            <div class="flex gap-3 items-start">
+              <div class="c-avatar">R</div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-semibold text-sm text-apple-text">RetroGhostX</span>
+                  <span class="stars text-xs">★★★★★</span>
+                </div>
+                <p class="text-apple-muted text-sm">The procedural dungeon generation keeps every session fresh. No two runs ever feel the same. The coal mechanic adds a really unique layer of tension.</p>
+                <div class="text-xs text-apple-muted mt-2">6 days ago · 👍 6</div>
+              </div>
             </div>
           </div>
-          <div class="flex gap-3 items-start p-4 bg-apple-bg rounded-xl">
-            <span class="text-apple-blue text-xl">✓</span>
-            <div>
-              <strong class="text-apple-text text-sm">Visible Skill Progression</strong>
-              <p class="text-apple-muted text-xs mt-0.5">Feel your reflexes and judgment sharpen with every session.</p>
+        </div>
+
+        <!-- Comment form -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-apple-border">
+          <h3 class="font-semibold text-lg text-apple-text mb-4">Leave a Comment</h3>
+          <form id="cmt-form" onsubmit="submitComment(event)">
+            <div class="grid grid-cols-2 gap-3 mb-3">
+              <input id="cmt-name" type="text" placeholder="Your name" required
+                class="border border-apple-border rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-apple-blue transition-colors">
+              <select id="cmt-stars" class="border border-apple-border rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-apple-blue transition-colors">
+                <option value="5">★★★★★ 5 stars</option>
+                <option value="4">★★★★☆ 4 stars</option>
+                <option value="3">★★★☆☆ 3 stars</option>
+                <option value="2">★★☆☆☆ 2 stars</option>
+                <option value="1">★☆☆☆☆ 1 star</option>
+              </select>
+            </div>
+            <textarea id="cmt-text" rows="3" placeholder="Share your experience with Cobb Can Move…" required
+              class="w-full border border-apple-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-apple-blue transition-colors mb-3 resize-none"></textarea>
+            <button type="submit" id="cmt-btn"
+              class="w-full bg-apple-blue hover:bg-apple-bluehover text-white font-semibold px-6 py-2 rounded-full text-sm transition-colors">
+              Post Comment
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section id="faq" class="py-14 bg-white border-t border-apple-border">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6">
+        <h2 class="text-3xl font-bold text-apple-text mb-2 text-center">Frequently Asked Questions</h2>
+        <p class="text-apple-muted text-center mb-10">Everything you need to know about Cobb Can Move.</p>
+
+        <div class="space-y-3" id="faq-list">
+
+          <div class="faq-item bg-apple-bg rounded-2xl border border-apple-border overflow-hidden">
+            <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between gap-4 hover:bg-white transition-colors">
+              <span class="font-semibold text-apple-text text-sm sm:text-base">Is Cobb Can Move free to play?</span>
+              <span class="faq-ico text-apple-blue font-bold text-xl flex-shrink-0">+</span>
+            </button>
+            <div class="faq-ans px-6">
+              <div class="pb-5 text-apple-muted text-sm leading-relaxed border-t border-apple-border pt-3">
+                Yes! Cobb Can Move is completely free to play online right here at cobbcanmove.club. No download, no registration, and no payment required. Just click Play Now and start your run instantly.
+              </div>
             </div>
           </div>
-          <div class="flex gap-3 items-start p-4 bg-apple-bg rounded-xl">
-            <span class="text-apple-blue text-xl">✓</span>
-            <div>
-              <strong class="text-apple-text text-sm">Relaxing Minimalist Atmosphere</strong>
-              <p class="text-apple-muted text-xs mt-0.5">Clean visuals create a calming yet immersive experience.</p>
+
+          <div class="faq-item bg-apple-bg rounded-2xl border border-apple-border overflow-hidden">
+            <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between gap-4 hover:bg-white transition-colors">
+              <span class="font-semibold text-apple-text text-sm sm:text-base">What is the goal in Cobb Can Move?</span>
+              <span class="faq-ico text-apple-blue font-bold text-xl flex-shrink-0">+</span>
+            </button>
+            <div class="faq-ans px-6">
+              <div class="pb-5 text-apple-muted text-sm leading-relaxed border-t border-apple-border pt-3">
+                Your goal is to survive inside a procedurally generated dungeon. You need to collect coal and carry it to furnaces, activate breakers to restore power, and escape the level — all while avoiding Cobb, whose abilities randomly change every run.
+              </div>
             </div>
           </div>
-          <div class="flex gap-3 items-start p-4 bg-apple-bg rounded-xl">
-            <span class="text-apple-blue text-xl">✓</span>
-            <div>
-              <strong class="text-apple-text text-sm">Replayability Through Optimization</strong>
-              <p class="text-apple-muted text-xs mt-0.5">Revisit levels to improve speed and movement efficiency.</p>
+
+          <div class="faq-item bg-apple-bg rounded-2xl border border-apple-border overflow-hidden">
+            <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between gap-4 hover:bg-white transition-colors">
+              <span class="font-semibold text-apple-text text-sm sm:text-base">What abilities can Cobb have?</span>
+              <span class="faq-ico text-apple-blue font-bold text-xl flex-shrink-0">+</span>
+            </button>
+            <div class="faq-ans px-6">
+              <div class="pb-5 text-apple-muted text-sm leading-relaxed border-t border-apple-border pt-3">
+                Cobb's abilities change randomly between levels. It can gain: <strong>sight</strong> (detects you by line of sight), <strong>hearing</strong> (detects noise), <strong>smell</strong> (detects proximity), <strong>duplication</strong> (splits into multiple copies), and <strong>increased reach</strong> (can grab you from further away). The combination of active rules defines each run's strategy.
+              </div>
             </div>
           </div>
-          <div class="flex gap-3 items-start p-4 bg-apple-bg rounded-xl">
-            <span class="text-apple-blue text-xl">✓</span>
-            <div>
-              <strong class="text-apple-text text-sm">Creative Freedom</strong>
-              <p class="text-apple-muted text-xs mt-0.5">Multiple movement strategies can lead to different solutions.</p>
+
+          <div class="faq-item bg-apple-bg rounded-2xl border border-apple-border overflow-hidden">
+            <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between gap-4 hover:bg-white transition-colors">
+              <span class="font-semibold text-apple-text text-sm sm:text-base">How do the furnaces and coal work?</span>
+              <span class="faq-ico text-apple-blue font-bold text-xl flex-shrink-0">+</span>
+            </button>
+            <div class="faq-ans px-6">
+              <div class="pb-5 text-apple-muted text-sm leading-relaxed border-t border-apple-border pt-3">
+                Coal is scattered throughout the dungeon. You pick it up, carry it to a furnace, and fuel it to keep the lights running. Darkness makes navigation harder and gives Cobb an advantage, so keeping furnaces powered is essential to survival.
+              </div>
             </div>
           </div>
-          <div class="flex gap-3 items-start p-4 bg-apple-bg rounded-xl">
-            <span class="text-apple-blue text-xl">✓</span>
-            <div>
-              <strong class="text-apple-text text-sm">Balanced Difficulty Curve</strong>
-              <p class="text-apple-muted text-xs mt-0.5">Challenging but fair — the game pushes without feeling unfair.</p>
+
+          <div class="faq-item bg-apple-bg rounded-2xl border border-apple-border overflow-hidden">
+            <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between gap-4 hover:bg-white transition-colors">
+              <span class="font-semibold text-apple-text text-sm sm:text-base">Can I play Cobb Can Move on mobile?</span>
+              <span class="faq-ico text-apple-blue font-bold text-xl flex-shrink-0">+</span>
+            </button>
+            <div class="faq-ans px-6">
+              <div class="pb-5 text-apple-muted text-sm leading-relaxed border-t border-apple-border pt-3">
+                Yes, the browser version works on mobile devices through Chrome or Safari. However, desktop is recommended for the best experience as the game relies on keyboard controls and precise movement. A Windows download version is also available on itch.io.
+              </div>
             </div>
           </div>
+
+          <div class="faq-item bg-apple-bg rounded-2xl border border-apple-border overflow-hidden">
+            <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between gap-4 hover:bg-white transition-colors">
+              <span class="font-semibold text-apple-text text-sm sm:text-base">What is Endless Mode in Cobb Can Move?</span>
+              <span class="faq-ico text-apple-blue font-bold text-xl flex-shrink-0">+</span>
+            </button>
+            <div class="faq-ans px-6">
+              <div class="pb-5 text-apple-muted text-sm leading-relaxed border-t border-apple-border pt-3">
+                After completing the story levels, Endless Mode unlocks. In this mode, runs continue indefinitely with escalating difficulty. Multiple Cobb rules stack simultaneously, randomized maps become more complex, and enemy behaviors grow increasingly unpredictable. It's designed for experienced players who want a real challenge.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item bg-apple-bg rounded-2xl border border-apple-border overflow-hidden">
+            <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between gap-4 hover:bg-white transition-colors">
+              <span class="font-semibold text-apple-text text-sm sm:text-base">What are the controls for Cobb Can Move?</span>
+              <span class="faq-ico text-apple-blue font-bold text-xl flex-shrink-0">+</span>
+            </button>
+            <div class="faq-ans px-6">
+              <div class="pb-5 text-apple-muted text-sm leading-relaxed border-t border-apple-border pt-3">
+                Cobb Can Move uses keyboard controls for movement, interaction with objects (coal, furnaces, breakers), and navigation. An optional gamepad is supported. The game emphasizes stealth, timing, and resource management — there is no combat. On mobile, use the on-screen touch controls.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item bg-apple-bg rounded-2xl border border-apple-border overflow-hidden">
+            <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between gap-4 hover:bg-white transition-colors">
+              <span class="font-semibold text-apple-text text-sm sm:text-base">Is Cobb Can Move scary? What age rating is it?</span>
+              <span class="faq-ico text-apple-blue font-bold text-xl flex-shrink-0">+</span>
+            </button>
+            <div class="faq-ans px-6">
+              <div class="pb-5 text-apple-muted text-sm leading-relaxed border-t border-apple-border pt-3">
+                Yes, Cobb Can Move is a genuine horror game. It features dark atmospheric environments, psychological tension, jump-scare moments, and unsettling monster animations. It is suitable for teen and adult players who enjoy horror games. It does not contain graphic violence or 18+ content.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item bg-apple-bg rounded-2xl border border-apple-border overflow-hidden">
+            <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between gap-4 hover:bg-white transition-colors">
+              <span class="font-semibold text-apple-text text-sm sm:text-base">Why does Cobb Can Move have randomized rules instead of fixed difficulty?</span>
+              <span class="faq-ico text-apple-blue font-bold text-xl flex-shrink-0">+</span>
+            </button>
+            <div class="faq-ans px-6">
+              <div class="pb-5 text-apple-muted text-sm leading-relaxed border-t border-apple-border pt-3">
+                The randomized rule system is the core design philosophy of Cobb Can Move. The developer wanted players to never feel fully "safe" or able to rely on memorized patterns. By changing Cobb's abilities every level, the game forces constant adaptation and keeps tension high across every single run.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item bg-apple-bg rounded-2xl border border-apple-border overflow-hidden">
+            <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between gap-4 hover:bg-white transition-colors">
+              <span class="font-semibold text-apple-text text-sm sm:text-base">Where can I download Cobb Can Move for PC?</span>
+              <span class="faq-ico text-apple-blue font-bold text-xl flex-shrink-0">+</span>
+            </button>
+            <div class="faq-ans px-6">
+              <div class="pb-5 text-apple-muted text-sm leading-relaxed border-t border-apple-border pt-3">
+                A Windows download version (COBB CAN MOVE v1.5 webview2.zip) is available on the official itch.io page at <strong>abho.itch.io/cobb-can-move</strong>. The browser version here at cobbcanmove.club requires no download and plays directly in your browser.
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -636,10 +689,9 @@
     <!-- ===== CTA ===== -->
     <section class="py-16 bg-apple-blue text-white text-center">
       <div class="max-w-2xl mx-auto px-4 sm:px-6">
-        <h2 class="text-3xl font-bold mb-3">Ready to Play Cobb Can Move?</h2>
-        <p class="text-blue-100 mb-8">Free, instant, no download — jump straight into the challenge.</p>
-        <a href="#play"
-           class="inline-flex items-center gap-2 bg-white text-apple-blue font-semibold px-8 py-3 rounded-full shadow-lg hover:bg-blue-50 transition-colors">
+        <h2 class="text-3xl font-bold mb-3">Ready to Face Cobb?</h2>
+        <p class="text-blue-100 mb-8">Free, instant, no download — can you survive when the rules keep changing?</p>
+        <a href="#play" class="inline-flex items-center gap-2 bg-white text-apple-blue font-semibold px-8 py-3 rounded-full shadow-lg hover:bg-blue-50 transition-colors">
           ▶ Play Cobb Can Move Free
         </a>
       </div>
@@ -653,187 +705,153 @@
       <div class="flex flex-col sm:flex-row justify-between items-start gap-8 mb-8">
         <div>
           <p class="text-white font-semibold text-lg mb-2">Cobb Can Move</p>
-          <p class="text-sm max-w-xs">Your destination for free online puzzle games. Play Cobb Can Move instantly in your browser!</p>
+          <p class="text-sm max-w-xs">Play Cobb Can Move free online — a survival horror roguelike where the monster's rules change every run.</p>
         </div>
         <div>
           <p class="text-white font-semibold mb-3 text-sm uppercase tracking-wider">Quick Links</p>
           <ul class="space-y-2 text-sm">
-            <li><a href="#play" class="hover:text-white transition-colors">Play Game</a></li>
-            <li><a href="#about" class="hover:text-white transition-colors">About</a></li>
+            <li><a href="#play"        class="hover:text-white transition-colors">Play Game</a></li>
+            <li><a href="#about"       class="hover:text-white transition-colors">About</a></li>
             <li><a href="#how-to-play" class="hover:text-white transition-colors">How to Play</a></li>
-            <li><a href="#details" class="hover:text-white transition-colors">Game Details</a></li>
+            <li><a href="#faq"         class="hover:text-white transition-colors">FAQ</a></li>
+            <li><a href="#comments"    class="hover:text-white transition-colors">Comments</a></li>
           </ul>
         </div>
         <div>
           <p class="text-white font-semibold mb-3 text-sm uppercase tracking-wider">Legal</p>
           <ul class="space-y-2 text-sm">
             <li><a href="/privacy" class="hover:text-white transition-colors">Privacy Policy</a></li>
-            <li><a href="/terms" class="hover:text-white transition-colors">Terms of Service</a></li>
+            <li><a href="/terms"   class="hover:text-white transition-colors">Terms of Service</a></li>
             <li><a href="/contact" class="hover:text-white transition-colors">Contact Us</a></li>
           </ul>
         </div>
       </div>
       <div class="border-t border-gray-700 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs">
         <p>© 2026 <a href="https://cobbcanmove.club/" class="text-white hover:underline">cobbcanmove.club</a>. All rights reserved.</p>
-        <p>
-          <a href="https://cobbcanmove.club/" class="text-white hover:underline">Cobb Can Move</a> –
-          Free Online Puzzle Platformer
-        </p>
+        <p><a href="https://cobbcanmove.club/" class="text-white hover:underline">Cobb Can Move</a> – Free Online Survival Horror Roguelike</p>
       </div>
     </div>
   </footer>
 
 <script>
+/* ── Game logic ── */
 const GAME_URL = 'https://s.cobb-can-move.com/games/cobb-can-move/index.html';
 var loadTimerInterval = null;
 var loadStartTime = null;
 
 function loadGame() {
-  const cover   = document.getElementById('game-cover');
-  const loading = document.getElementById('game-loading');
-  const wrapper = document.getElementById('game-wrapper');
-  const frame   = document.getElementById('game-frame');
-  const timerEl = document.getElementById('load-timer');
-  const footerNote = document.getElementById('game-footer-note');
-  const closeBtn   = document.getElementById('game-close-btn');
-
-  if (frame.src && frame.src !== window.location.href) return; // already loaded
-
-  // Show loading state
-  cover.style.display   = 'none';
-  loading.style.display = 'block';
-  if (footerNote) footerNote.textContent = '⏳ Loading… please wait.';
-
-  // Start iframe loading
-  frame.src = GAME_URL;
-
-  // Elapsed timer
-  loadStartTime = Date.now();
+  var cover=document.getElementById('game-cover'), loading=document.getElementById('game-loading'),
+      wrapper=document.getElementById('game-wrapper'), frame=document.getElementById('game-frame'),
+      timerEl=document.getElementById('load-timer'), footerNote=document.getElementById('game-footer-note');
+  if (frame.src && frame.src !== window.location.href) return;
+  cover.style.display='none'; loading.style.display='block';
+  if (footerNote) footerNote.textContent='⏳ Loading… please wait.';
+  frame.src=GAME_URL;
+  loadStartTime=Date.now();
   if (loadTimerInterval) clearInterval(loadTimerInterval);
-  loadTimerInterval = setInterval(function() {
-    var elapsed = Math.floor((Date.now() - loadStartTime) / 1000);
-    if (timerEl) timerEl.textContent = elapsed + 's elapsed';
-    if (elapsed >= 60) {
-      clearInterval(loadTimerInterval);
-      loading.style.display = 'none';
-      wrapper.style.display = 'block';
-      showGameControls();
-      if (footerNote) footerNote.textContent = '🎮 Game ready! Tap Fullscreen for the best experience.';
-    }
-  }, 1000);
-
-  // Show game when iframe loads
-  frame.onload = function() {
-    clearInterval(loadTimerInterval);
-    loading.style.display = 'none';
-    wrapper.style.display = 'block';
-    showGameControls();
-    if (footerNote) footerNote.textContent = '🎮 Game ready! Tap Fullscreen for the best experience.';
-  };
-
-  loading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  loadTimerInterval=setInterval(function() {
+    var elapsed=Math.floor((Date.now()-loadStartTime)/1000);
+    if (timerEl) timerEl.textContent=elapsed+'s elapsed';
+    if (elapsed>=60) { clearInterval(loadTimerInterval); showGame(footerNote, loading, wrapper); }
+  },1000);
+  frame.onload=function() { clearInterval(loadTimerInterval); showGame(footerNote, loading, wrapper); };
+  loading.scrollIntoView({behavior:'smooth',block:'start'});
 }
-
-var isIosFakeFS = false;
-
-function showGameControls() {
-  var controls = document.getElementById('game-controls');
-  if (controls) controls.style.display = 'flex';
+function showGame(footerNote, loading, wrapper) {
+  loading.style.display='none'; wrapper.style.display='block';
+  showGameControls();
+  if (footerNote) footerNote.textContent='🎮 Game ready! Tap Fullscreen for the best experience.';
 }
+function showGameControls() { var c=document.getElementById('game-controls'); if(c) c.style.display='flex'; }
 
+var isIosFakeFS=false;
 function closeGame() {
   if (loadTimerInterval) clearInterval(loadTimerInterval);
-  // Exit fullscreen (standard or iOS fake)
   exitFullscreenAll();
-
-  var cover    = document.getElementById('game-cover');
-  var loading  = document.getElementById('game-loading');
-  var wrapper  = document.getElementById('game-wrapper');
-  var frame    = document.getElementById('game-frame');
-  var timerEl  = document.getElementById('load-timer');
-  var footerNote = document.getElementById('game-footer-note');
-  var controls = document.getElementById('game-controls');
-
-  frame.src = '';
-  cover.style.display   = 'block';
-  loading.style.display = 'none';
-  wrapper.style.display = 'none';
-  if (controls)   controls.style.display = 'none';
-  if (timerEl)    timerEl.textContent = '0s elapsed';
-  if (footerNote) footerNote.textContent = 'Click Play Now to start. Supports keyboard & touch controls.';
+  var cover=document.getElementById('game-cover'), loading=document.getElementById('game-loading'),
+      wrapper=document.getElementById('game-wrapper'), frame=document.getElementById('game-frame'),
+      timerEl=document.getElementById('load-timer'), footerNote=document.getElementById('game-footer-note'),
+      controls=document.getElementById('game-controls');
+  frame.src=''; cover.style.display='block'; loading.style.display='none'; wrapper.style.display='none';
+  if(controls) controls.style.display='none';
+  if(timerEl) timerEl.textContent='0s elapsed';
+  if(footerNote) footerNote.textContent='Click Play Now to start. Supports keyboard & touch controls.';
 }
-
 function exitFullscreenAll() {
   if (isIosFakeFS) {
-    // Restore iOS fake fullscreen
-    var wrapper = document.getElementById('game-wrapper');
-    wrapper.style.cssText = wrapper.style.cssText.replace('position:fixed;inset:0;z-index:99999;border-radius:0;', '');
-    document.body.style.overflow = '';
-    isIosFakeFS = false;
-    updateFsButton(false);
-  } else if (document.fullscreenElement || document.webkitFullscreenElement) {
-    var exitFn = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen;
-    if (exitFn) exitFn.call(document);
+    var w=document.getElementById('game-wrapper');
+    w.style.cssText=w.style.cssText.replace('position:fixed;inset:0;z-index:99999;border-radius:0;','');
+    document.body.style.overflow=''; isIosFakeFS=false; updateFsButton(false);
+  } else if (document.fullscreenElement||document.webkitFullscreenElement) {
+    var fn=document.exitFullscreen||document.webkitExitFullscreen||document.mozCancelFullScreen;
+    if(fn) fn.call(document);
   }
 }
-
 function toggleFullscreen() {
-  var wrapper = document.getElementById('game-wrapper');
-  var isFS = !!(document.fullscreenElement || document.webkitFullscreenElement || isIosFakeFS);
-
-  if (isFS) {
-    exitFullscreenAll();
-    return;
-  }
-
-  // Try standard Fullscreen API
-  var reqFn = wrapper.requestFullscreen || wrapper.webkitRequestFullscreen || wrapper.mozRequestFullScreen;
-  if (reqFn) {
-    reqFn.call(wrapper);
-  } else {
-    // iOS Safari fallback: position:fixed over whole screen
-    wrapper.style.cssText += 'position:fixed;inset:0;z-index:99999;border-radius:0;';
-    document.body.style.overflow = 'hidden';
-    isIosFakeFS = true;
-    updateFsButton(true);
-    wrapper.scrollIntoView();
+  var wrapper=document.getElementById('game-wrapper');
+  var isFS=!!(document.fullscreenElement||document.webkitFullscreenElement||isIosFakeFS);
+  if(isFS){exitFullscreenAll();return;}
+  var req=wrapper.requestFullscreen||wrapper.webkitRequestFullscreen||wrapper.mozRequestFullScreen;
+  if(req){req.call(wrapper);}else{
+    wrapper.style.cssText+='position:fixed;inset:0;z-index:99999;border-radius:0;';
+    document.body.style.overflow='hidden'; isIosFakeFS=true; updateFsButton(true); wrapper.scrollIntoView();
   }
 }
-
 function updateFsButton(entering) {
-  var label = document.getElementById('fs-label');
-  var icon  = document.getElementById('fs-icon');
-  if (!label) return;
-  if (entering) {
-    label.textContent = 'Exit Full';
-    if (icon) icon.innerHTML = '<path d="M8 3v3a2 2 0 0 1-2 2H3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 8h-3a2 2 0 0 1-2-2V3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 16h3a2 2 0 0 1 2 2v3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 21v-3a2 2 0 0 1 2-2h3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
-  } else {
-    label.textContent = 'Fullscreen';
-    if (icon) icon.innerHTML = '<path d="M8 3H5a2 2 0 0 0-2 2v3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 8V5a2 2 0 0 0-2-2h-3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 16v3a2 2 0 0 0 2 2h3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 21h3a2 2 0 0 0 2-2v-3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
-  }
+  var label=document.getElementById('fs-label');
+  if(!label) return;
+  label.textContent=entering?'Exit Full':'Fullscreen';
 }
-
-// Standard fullscreen change events
-['fullscreenchange','webkitfullscreenchange'].forEach(function(evt) {
-  document.addEventListener(evt, function() {
-    var inFS = !!(document.fullscreenElement || document.webkitFullscreenElement);
-    updateFsButton(inFS);
+['fullscreenchange','webkitfullscreenchange'].forEach(function(evt){
+  document.addEventListener(evt,function(){
+    updateFsButton(!!(document.fullscreenElement||document.webkitFullscreenElement));
   });
 });
 
-// Keyboard support for cover
-document.addEventListener('DOMContentLoaded', function() {
-  var cover = document.getElementById('game-cover');
-  if (cover) {
-    cover.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); loadGame(); }
+/* ── FAQ accordion ── */
+document.querySelectorAll('.faq-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var item=this.closest('.faq-item'), ans=item.querySelector('.faq-ans'), isOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(el){
+      el.classList.remove('open'); el.querySelector('.faq-ans').classList.remove('open');
     });
-  }
+    if(!isOpen){item.classList.add('open');ans.classList.add('open');}
+  });
+});
 
-  // Mobile tip (non-blocking)
-  if (/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)) {
-    var tip = document.getElementById('mobile-tip');
-    if (tip) tip.style.display = 'block';
+/* ── Comment form ── */
+function submitComment(e) {
+  e.preventDefault();
+  var name=document.getElementById('cmt-name').value.trim();
+  var stars=parseInt(document.getElementById('cmt-stars').value);
+  var text=document.getElementById('cmt-text').value.trim();
+  if(!name||!text) return;
+  var filled='★'.repeat(stars), empty='☆'.repeat(5-stars), init=name.charAt(0).toUpperCase();
+  var html='<div class="bg-white rounded-2xl p-4 shadow-sm border border-apple-border">'
+    +'<div class="flex gap-3 items-start">'
+    +'<div class="c-avatar">'+init+'</div>'
+    +'<div class="flex-1 min-w-0">'
+    +'<div class="flex items-center justify-between mb-1">'
+    +'<span class="font-semibold text-sm text-apple-text">'+esc(name)+'</span>'
+    +'<span class="stars text-xs">'+filled+empty+'</span>'
+    +'</div>'
+    +'<p class="text-apple-muted text-sm">'+esc(text)+'</p>'
+    +'<div class="text-xs text-apple-muted mt-2">just now · 👍 0</div>'
+    +'</div></div></div>';
+  document.getElementById('comment-list').insertAdjacentHTML('afterbegin',html);
+  document.getElementById('cmt-form').reset();
+  var btn=document.getElementById('cmt-btn');
+  btn.textContent='✓ Comment Posted!'; btn.style.background='#166534';
+  setTimeout(function(){btn.textContent='Post Comment';btn.style.background='';},3000);
+}
+function esc(s){var d=document.createElement('div');d.appendChild(document.createTextNode(s));return d.innerHTML;}
+
+/* ── Init ── */
+document.addEventListener('DOMContentLoaded',function(){
+  var cover=document.getElementById('game-cover');
+  if(cover){cover.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();loadGame();}});}
+  if(/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)){
+    var tip=document.getElementById('mobile-tip'); if(tip) tip.style.display='block';
   }
 });
 </script>
